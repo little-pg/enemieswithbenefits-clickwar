@@ -261,6 +261,29 @@
     .big-btn:active { transform: translate(4px,4px) !important; }
     .big-btn.b-orange:active { box-shadow: 1px 1px 0 var(--orange-border) !important; }
     .big-btn.b-purple:active { box-shadow: 1px 1px 0 var(--purple-border) !important; }
+    .big-btn.disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+      filter: grayscale(60%);
+      pointer-events: none;
+    }
+
+    #back-btn {
+      font-family: var(--pixel);
+      font-size: 0.42rem;
+      padding: 8px 1.2rem;
+      border: 2px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 3px 3px 0 var(--border);
+      transition: transform .07s, box-shadow .07s;
+      align-self: flex-start;
+    }
+    #back-btn:hover  { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--border); color: var(--text); }
+    #back-btn:active { transform: translate(2px,2px);   box-shadow: 1px 1px 0 var(--border); }
 
     #vs-mid { font-size: 0.65rem; color: var(--muted); }
 
@@ -334,6 +357,8 @@
 
   <!-- GAME SCREEN -->
   <div id="game-screen">
+
+    <button id="back-btn" onclick="goBack()">◀ Change Team</button>
 
     <div id="online-row">
       <span class="online-pill">🦊 <span id="online-orange">—</span> clicks</span>
@@ -414,6 +439,7 @@
   let globalScore = { orange: 0, purple: 0 };
   let recent      = { orange: [], purple: [] };
   let started     = false;
+  let myTeam      = null;
 
   function setConn(ok) {
     document.getElementById('conn-dot').className   = 'dot ' + (ok ? 'online' : 'offline');
@@ -435,6 +461,7 @@
   });
 
   window.selectTeam = function(t) {
+    myTeam = t;
     document.getElementById('sc-orange').className = 'sel-card' + (t === 'orange' ? ' active-orange' : '');
     document.getElementById('sc-purple').className = 'sel-card' + (t === 'purple' ? ' active-purple' : '');
     document.getElementById('start-btn').disabled  = false;
@@ -446,11 +473,31 @@
     document.getElementById('select-screen').style.display = 'none';
     document.getElementById('game-screen').classList.add('show');
     started = true;
+    // Disable the opposing team's button
+    const opponent = myTeam === 'orange' ? 'purple' : 'orange';
+    document.getElementById('btn-' + opponent).classList.add('disabled');
     setInterval(updateCps, 500);
+  };
+
+  window.goBack = function() {
+    started = false;
+    myTeam  = null;
+    // Re-enable both buttons
+    document.getElementById('btn-orange').classList.remove('disabled');
+    document.getElementById('btn-purple').classList.remove('disabled');
+    // Reset team selection UI
+    document.getElementById('sc-orange').className = 'sel-card';
+    document.getElementById('sc-purple').className = 'sel-card';
+    document.getElementById('start-btn').disabled  = true;
+    document.getElementById('lbl-p1').textContent  = 'Sales';
+    document.getElementById('lbl-p2').textContent  = 'Accounting';
+    document.getElementById('game-screen').classList.remove('show');
+    document.getElementById('select-screen').style.display = '';
   };
 
   window.doClick = function(team, e) {
     if (!started) return;
+    if (team !== myTeam) return;  // only allow clicking own team
     recent[team].push(Date.now());
     const cutoff = Date.now() - 1500;
     recent[team] = recent[team].filter(x => x > cutoff);
