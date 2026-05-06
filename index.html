@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PopCat Battle 🦊 VS 🐯</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    #app {
+      background: #fff;
+      border-radius: 20px;
+      border: 1px solid #e0e0d8;
+      padding: 1.5rem 1.25rem;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    #connect-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #888;
+      margin-bottom: 1.25rem;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; display: inline-block; }
+    .dot.online  { background: #639922; }
+    .dot.offline { background: #E24B4A; }
+
+    #select-screen { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .sel-row { display: flex; gap: 1rem; width: 100%; }
+    .sel-card {
+      flex: 1;
+      padding: 1.25rem 1rem;
+      border-radius: 16px;
+      border: 2px solid #e0e0d8;
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: border-color .15s, transform .1s;
+    }
+    .sel-card:hover { transform: scale(1.03); }
+    .sel-card.active-orange { border-color: #BA7517; background: #FAEEDA; }
+    .sel-card.active-purple { border-color: #534AB7; background: #EEEDFE; }
+    .sel-emoji { font-size: 2.75rem; line-height: 1; }
+    .sel-name  { font-size: 1rem; font-weight: 500; color: #222; }
+    .sel-count { font-size: 0.8rem; color: #888; }
+
+    .hint { font-size: 0.8rem; color: #888; text-align: center; }
+
+    #start-btn {
+      padding: 10px 2.5rem;
+      border-radius: 10px;
+      border: 1px solid #d0d0c8;
+      background: #f0f0ea;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: #222;
+      transition: background .15s;
+    }
+    #start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    #start-btn:not(:disabled):hover { background: #e4e4dc; }
+
+    #game-screen { display: none; flex-direction: column; align-items: center; gap: 0.9rem; }
+    #game-screen.show { display: flex; }
+
+    #online-row {
+      display: flex;
+      gap: 12px;
+      font-size: 0.75rem;
+      color: #888;
+      justify-content: center;
+    }
+    .online-pill { display: flex; align-items: center; gap: 4px; }
+
+    #score-row { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+    .sc-box { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .sc-emoji { font-size: 1.6rem; line-height: 1; }
+    .sc-num { font-size: 2rem; font-weight: 600; }
+    .sc-num.orange { color: #BA7517; }
+    .sc-num.purple { color: #534AB7; }
+    .sc-lbl { font-size: 0.72rem; color: #888; }
+
+    #middle-col { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .vs-txt   { font-size: 1.3rem; color: #aaa; }
+    .lead-txt { font-size: 0.72rem; color: #888; text-align: center; }
+    .diff-num { font-size: 1rem; font-weight: 500; color: #444; }
+
+    #prog-wrap {
+      width: 100%;
+      height: 38px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #e0e0d8;
+      display: flex;
+    }
+    #bar-orange {
+      height: 100%;
+      background: #EF9F27;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      transition: width .18s ease;
+      min-width: 0;
+    }
+    #bar-purple {
+      height: 100%;
+      background: #7F77DD;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      min-width: 0;
+    }
+    .bp { font-size: 0.78rem; font-weight: 500; color: #fff; white-space: nowrap; }
+
+    #arena { width: 100%; display: flex; gap: 8px; justify-content: center; align-items: center; }
+    .click-zone { flex: 1; max-width: 200px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .zone-lbl { font-size: 0.78rem; color: #888; }
+    .zone-cps { font-size: 0.75rem; color: #aaa; }
+
+    .big-btn {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      font-size: 3.5rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 3px solid #ddd;
+      background: #f5f5f0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      transition: transform .07s;
+    }
+    .big-btn.b-orange { border-color: #BA7517; background: #FAEEDA; }
+    .big-btn.b-purple { border-color: #534AB7; background: #EEEDFE; }
+    .big-btn:active { transform: scale(0.84) !important; }
+
+    #tip {
+      font-size: 0.82rem;
+      color: #888;
+      text-align: center;
+      min-height: 1.2em;
+    }
+
+    .pop {
+      position: fixed;
+      pointer-events: none;
+      font-weight: 600;
+      font-size: 1rem;
+      z-index: 999;
+      animation: popUp .65s ease-out forwards;
+    }
+    @keyframes popUp {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-55px) scale(1.2); }
+    }
+
+    @media (max-width: 420px) {
+      .big-btn { width: 108px; height: 108px; font-size: 3rem; }
+      .sc-num  { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <div id="connect-status">
+    <span class="dot" id="conn-dot"></span>
+    <span id="conn-txt">กำลังเชื่อมต่อ...</span>
+  </div>
+
+  <!-- Select Screen -->
+  <div id="select-screen">
+    <div class="sel-row">
+      <div class="sel-card" id="sc-orange" onclick="selectTeam('orange')">
+        <span class="sel-emoji">🦊</span>
+        <span class="sel-name">ทีมขาย</span>
+        <span class="sel-count" id="lbl-orange-total">0 คลิกรวม</span>
+      </div>
+      <div class="sel-card" id="sc-purple" onclick="selectTeam('purple')">
+        <span class="sel-emoji">🐯</span>
+        <span class="sel-name">ทีมบัญชี</span>
+        <span class="sel-count" id="lbl-purple-total">0 คลิกรวม</span>
+      </div>
+    </div>
+    <p class="hint">คะแนน sync กับทุกคนที่เล่นอยู่แบบ real-time</p>
+    <button id="start-btn" disabled onclick="startGame()">เริ่มเกม</button>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game-screen">
+    <div id="online-row">
+      <span class="online-pill">🦊 <span id="online-orange">—</span> คลิกรวม</span>
+      <span style="color:#ddd">|</span>
+      <span class="online-pill">🐯 <span id="online-purple">—</span> คลิกรวม</span>
+    </div>
+
+    <div id="score-row">
+      <div class="sc-box">
+        <span class="sc-emoji">🦊</span>
+        <span class="sc-num orange" id="s-orange">0</span>
+        <span class="sc-lbl" id="lbl-p1">ทีมขาย</span>
+      </div>
+      <div id="middle-col">
+        <span class="vs-txt">VS</span>
+        <span class="lead-txt" id="lead-txt">เสมอกัน</span>
+        <span class="diff-num" id="diff-num">0</span>
+      </div>
+      <div class="sc-box">
+        <span class="sc-emoji">🐯</span>
+        <span class="sc-num purple" id="s-purple">0</span>
+        <span class="sc-lbl" id="lbl-p2">ทีมบัญชี</span>
+      </div>
+    </div>
+
+    <div id="prog-wrap">
+      <div id="bar-orange" style="width:50%"><span class="bp" id="pct-orange">50%</span></div>
+      <div id="bar-purple"><span class="bp" id="pct-purple">50%</span></div>
+    </div>
+
+    <div id="arena">
+      <div class="click-zone">
+        <span class="zone-lbl">🦊 ทีมขาย</span>
+        <div class="big-btn b-orange" id="btn-orange"
+          onpointerdown="doClick('orange', event)"
+          oncontextmenu="return false">🦊</div>
+        <span class="zone-cps" id="cps-orange">0 คลิก/วิ</span>
+      </div>
+
+      <span style="font-size:1.3rem;color:#bbb">VS</span>
+
+      <div class="click-zone">
+        <span class="zone-lbl">🐯 ทีมบัญชี</span>
+        <div class="big-btn b-purple" id="btn-purple"
+          onpointerdown="doClick('purple', event)"
+          oncontextmenu="return false">🐯</div>
+        <span class="zone-cps" id="cps-purple">0 คลิก/วิ</span>
+      </div>
+    </div>
+
+    <div id="tip">กดปุ่มทีมของคุณให้เร็วที่สุด!</div>
+  </div>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, onValue, runTransaction }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyCm6loEaD9jyVefd545mAJrBiZi7cnyB0E",
+    authDomain:        "enimies-with-benefits.firebaseapp.com",
+    databaseURL:       "https://enimies-with-benefits-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId:         "enimies-with-benefits",
+    storageBucket:     "enimies-with-benefits.firebasestorage.app",
+    messagingSenderId: "728726854685",
+    appId:             "1:728726854685:web:00925f9f9e571e2d4afaf4"
+  };
+
+  const app        = initializeApp(firebaseConfig);
+  const db         = getDatabase(app);
+  const orangeRef  = ref(db, 'popcat/orange');
+  const purpleRef  = ref(db, 'popcat/purple');
+
+  let globalScore = { orange: 0, purple: 0 };
+  let recent      = { orange: [], purple: [] };
+  let started     = false;
+
+  function setConn(ok) {
+    document.getElementById('conn-dot').className   = 'dot ' + (ok ? 'online' : 'offline');
+    document.getElementById('conn-txt').textContent = ok ? 'เชื่อมต่อ Firebase แล้ว' : 'ออฟไลน์';
+  }
+
+  onValue(orangeRef, snap => {
+    globalScore.orange = snap.val() || 0;
+    document.getElementById('lbl-orange-total').textContent = globalScore.orange + ' คลิกรวม';
+    document.getElementById('online-orange').textContent    = globalScore.orange;
+    updateUI();
+    setConn(true);
+  }, () => setConn(false));
+
+  onValue(purpleRef, snap => {
+    globalScore.purple = snap.val() || 0;
+    document.getElementById('lbl-purple-total').textContent = globalScore.purple + ' คลิกรวม';
+    document.getElementById('online-purple').textContent    = globalScore.purple;
+    updateUI();
+  });
+
+  window.selectTeam = function(t) {
+    document.getElementById('sc-orange').className = 'sel-card' + (t === 'orange' ? ' active-orange' : '');
+    document.getElementById('sc-purple').className = 'sel-card' + (t === 'purple' ? ' active-purple' : '');
+    document.getElementById('start-btn').disabled  = false;
+    document.getElementById('lbl-p1').textContent  = t === 'orange' ? 'ทีมขาย (คุณ)'   : 'ทีมขาย';
+    document.getElementById('lbl-p2').textContent  = t === 'purple' ? 'ทีมบัญชี (คุณ)' : 'ทีมบัญชี';
+  };
+
+  window.startGame = function() {
+    document.getElementById('select-screen').style.display = 'none';
+    document.getElementById('game-screen').classList.add('show');
+    started = true;
+    setInterval(updateCps, 500);
+  };
+
+  window.doClick = function(team, e) {
+    if (!started) return;
+    recent[team].push(Date.now());
+    const cutoff = Date.now() - 1500;
+    recent[team] = recent[team].filter(t => t > cutoff);
+    runTransaction(team === 'orange' ? orangeRef : purpleRef, cur => (cur || 0) + 1);
+    spawnPop(e, team);
+    buzzBtn(team);
+    if (Math.random() < 0.12) {
+      const tips = ['กดไว้ๆ!', 'อย่าหยุด!', 'สู้ๆ!', 'เยี่ยมมาก!', 'โหดสุด!', 'ไปต่อ!'];
+      document.getElementById('tip').textContent = tips[Math.floor(Math.random() * tips.length)];
+    }
+  };
+
+  function buzzBtn(team) {
+    const b = document.getElementById('btn-' + team);
+    b.style.transform = 'scale(0.84)';
+    setTimeout(() => { b.style.transform = ''; }, 75);
+  }
+
+  function spawnPop(e, team) {
+    const rect = document.getElementById('btn-' + team).getBoundingClientRect();
+    const el   = document.createElement('div');
+    el.className   = 'pop';
+    el.textContent = '+1';
+    el.style.color = team === 'orange' ? '#BA7517' : '#534AB7';
+    el.style.left  = (rect.left + rect.width / 2 - 12) + 'px';
+    el.style.top   = (rect.top - 10) + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 680);
+  }
+
+  function updateUI() {
+    const o = globalScore.orange, p = globalScore.purple;
+    const total = o + p || 1;
+    const op = Math.round(o / total * 100);
+    const pp = 100 - op;
+
+    document.getElementById('s-orange').textContent   = o;
+    document.getElementById('s-purple').textContent   = p;
+    document.getElementById('bar-orange').style.width = op + '%';
+    document.getElementById('pct-orange').textContent = op + '%';
+    document.getElementById('pct-purple').textContent = pp + '%';
+
+    const diff = o - p;
+    document.getElementById('diff-num').textContent = Math.abs(diff);
+    const lt = document.getElementById('lead-txt');
+    if (diff > 0)      { lt.textContent = '🦊 ทีมขายนำอยู่';   lt.style.color = '#BA7517'; }
+    else if (diff < 0) { lt.textContent = '🐯 ทีมบัญชีนำอยู่'; lt.style.color = '#534AB7'; }
+    else               { lt.textContent = 'เสมอกัน';            lt.style.color = '';        }
+  }
+
+  function updateCps() {
+    const now = Date.now();
+    ['orange', 'purple'].forEach(t => {
+      recent[t] = recent[t].filter(x => now - x < 2000);
+      document.getElementById('cps-' + t).textContent = (recent[t].length / 2).toFixed(1) + ' คลิก/วิ';
+    });
+  }
+</script>
+</body>
+</html>
