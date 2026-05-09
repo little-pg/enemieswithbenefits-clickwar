@@ -9,8 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --orange: #C87200; --orange-bg: #FEF3DC; --orange-bar: #F5A623; --orange-border: #A85E00;
-      --purple: #3D34A0; --purple-bg: #EEEDFE; --purple-bar: #7B72E0; --purple-border: #2E278A;
+      --orange: #bd663e; --orange-bg: #FEF3DC; --orange-bar: #bd663e; --orange-border: #F5A623;
+      --purple: #f0d965; --purple-bg: #FCF9D9; --purple-bar: #f0d965; --purple-border: #FCE342;
       --bg: #EDECE5; --card: #FAFAF7; --border: #C8C8BE;
       --text: #18180F; --muted: #7A7A70; --green: #4A7A10; --red: #B03020;
       --pixel: 'Press Start 2P', monospace;
@@ -210,7 +210,7 @@
   <div class="title-eyebrow">🏢 Syntara Office Edition</div>
   <div class="title-main"><em>Enemies</em> With <strong>Benefits</strong><br>CLICK WAR</div>
   <div class="title-divider"></div>
-  <div class="title-sub">Sales 🦊 vs Accounting 🐯</div>
+  <div class="title-sub">Sales <img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"> vs Accounting <img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"></div>
 </div>
 
 <div id="app">
@@ -236,12 +236,12 @@
   <div id="select-screen">
     <div class="sel-row">
       <div class="sel-card" id="sc-orange" onclick="selectTeam('orange')">
-        <span class="sel-emoji">🦊</span>
+        <span class="sel-emoji"><img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:3rem;height:3rem;object-fit:contain;"></span>
         <span class="sel-name">Sales</span>
         <span class="sel-count" id="lbl-orange-total">0 clicks</span>
       </div>
       <div class="sel-card" id="sc-purple" onclick="selectTeam('purple')">
-        <span class="sel-emoji">🐯</span>
+        <span class="sel-emoji"><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:3rem;height:3rem;object-fit:contain;"></span>
         <span class="sel-name">Accounting</span>
         <span class="sel-count" id="lbl-purple-total">0 clicks</span>
       </div>
@@ -261,13 +261,13 @@
       <button id="back-btn" onclick="goBack()">◀ Team</button>
     </div>
     <div id="online-row">
-      <span class="online-pill">🦊 <span id="online-orange">—</span> clicks</span>
+      <span class="online-pill"><img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"> <span id="online-orange">—</span> clicks</span>
       <span class="sep">|</span>
-      <span class="online-pill">🐯 <span id="online-purple">—</span> clicks</span>
+      <span class="online-pill"><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"> <span id="online-purple">—</span> clicks</span>
     </div>
     <div id="score-row">
       <div class="sc-box">
-        <span class="sc-emoji">🦊</span>
+        <span class="sc-emoji"><img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:2.2rem;height:2.2rem;object-fit:contain;"></span>
         <span class="sc-num orange" id="s-orange">0</span>
         <span class="sc-lbl" id="lbl-p1">Sales</span>
       </div>
@@ -277,7 +277,7 @@
         <span class="diff-num" id="diff-num">0</span>
       </div>
       <div class="sc-box">
-        <span class="sc-emoji">🐯</span>
+        <span class="sc-emoji"><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:2.2rem;height:2.2rem;object-fit:contain;"></span>
         <span class="sc-num purple" id="s-purple">0</span>
         <span class="sc-lbl" id="lbl-p2">Accounting</span>
       </div>
@@ -288,14 +288,14 @@
     </div>
     <div id="arena">
       <div class="click-zone">
-        <span class="zone-lbl">🦊 Sales Team</span>
-        <div class="big-btn b-orange" id="btn-orange" onpointerdown="doClick('orange',event)" oncontextmenu="return false">🦊</div>
+        <span class="zone-lbl"><img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"> Sales Team</span>
+        <div class="big-btn b-orange" id="btn-orange" onpointerdown="doClick('orange',event)" oncontextmenu="return false"><img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:80px;height:80px;object-fit:contain;"></div>
         <span class="zone-cps" id="cps-orange">0 cps</span>
       </div>
       <span id="vs-mid">VS</span>
       <div class="click-zone">
-        <span class="zone-lbl">🐯 Acct Team</span>
-        <div class="big-btn b-purple" id="btn-purple" onpointerdown="doClick('purple',event)" oncontextmenu="return false">🐯</div>
+        <span class="zone-lbl"><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"> Acct Team</span>
+        <div class="big-btn b-purple" id="btn-purple" onpointerdown="doClick('purple',event)" oncontextmenu="return false"><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:80px;height:80px;object-fit:contain;"></div>
         <span class="zone-cps" id="cps-purple">0 cps</span>
       </div>
     </div>
@@ -305,19 +305,19 @@
   <!-- ══ ROUND-END SCREEN ══ -->
   <div id="round-end">
     <div class="re-eyebrow" id="re-eyebrow">Round 1  — Result</div>
-    <div class="re-winner"  id="re-winner">🦊</div>
+    <div class="re-winner"  id="re-winner"></div>
     <div class="re-scores"  id="re-scores"></div>
     <div id="series-tally">
       <div class="tally-block">
         <span class="tally-num orange" id="tally-orange">0</span>
-        <span class="tally-lbl">🦊 Sales wins</span>
+        <span class="tally-lbl"><img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"> Sales wins</span>
       </div>
       <div class="tally-block">
         <span style="font-size:0.36rem;color:var(--muted)">SERIES</span>
       </div>
       <div class="tally-block">
         <span class="tally-num purple" id="tally-purple">0</span>
-        <span class="tally-lbl">Acct wins 🐯</span>
+        <span class="tally-lbl">Acct wins <img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"></span>
       </div>
     </div>
     <div id="series-board" style="width:100%"></div>
@@ -334,7 +334,7 @@
 
 </div>
 
-<div id="footer">No bots · No timers · Just clicks · Powered by littlebaecon @littlebaechu_</div>
+<div id="footer"> · Made by littlebaecon @littlebaechu_ · Artworks by Marcy @awbymarcy ·</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -347,7 +347,7 @@
      ── รูปแบบ: { start: 'YYYY-MM-DDTHH:MM:SS+07:00', end: 'YYYY-MM-DDTHH:MM:SS+07:00' }
   ════════════════════════════════════════════════ */
   const ROUNDS = [
-     { start: '2026-05-09T00:00:00+07:00', end: '2026-05-09T23:59:00+07:00' }, // Round TEST (วันนี้)
+    { start: '2026-05-09T00:00:00+07:00', end: '2026-05-09T23:59:00+07:00' }, // Round TEST (วันนี้)
     { start: '2025-05-10T19:00:00+07:00', end: '2025-05-11T20:15:00+07:00' }, // Round 1
     { start: '2025-05-17T19:00:00+07:00', end: '2025-05-18T20:15:00+07:00' }, // Round 2
     { start: '2025-05-24T19:00:00+07:00', end: '2025-05-25T20:15:00+07:00' }, // Round 3
@@ -471,7 +471,11 @@
       const past = roundHistory.find(h => h.round === i + 1);
       if (past) {
         pip.className   = 'round-pip done-' + past.winner;
-        pip.textContent = past.winner === 'orange' ? '🦊' : past.winner === 'purple' ? '🐯' : '=';
+        pip.innerHTML = past.winner === 'orange'
+        ? '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:14px;height:14px;object-fit:contain;">'
+        : past.winner === 'purple'
+        ? '<img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:14px;height:14px;object-fit:contain;">'
+        : '=';
       } else if (i === activeIndex) {
         pip.className   = 'round-pip active';
         pip.textContent = i + 1;
@@ -638,13 +642,12 @@
     $('re-eyebrow').textContent = `Round ${last.round} / ${TOTAL_ROUNDS} — Result`;
 
     const rw = $('re-winner');
-    if (last.winner === 'orange') { rw.textContent = '🦊\nSales Wins!';        rw.className = 're-winner orange'; }
-    else if (last.winner === 'purple') { rw.textContent = '🐯\nAccounting Wins!'; rw.className = 're-winner purple'; }
+    if (last.winner === 'orange') { rw.innerHTML = '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:3.5rem;height:3.5rem;object-fit:contain;display:block;margin:0 auto 8px"><span>Sales Wins!</span>'; rw.className = 're-winner orange'; }
+    else if (last.winner === 'purple') { rw.innerHTML = '<img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:3.5rem;height:3.5rem;object-fit:contain;display:block;margin:0 auto 8px"><span>Accounting Wins!</span>'; rw.className = 're-winner purple'; }
     else                          { rw.textContent = "🤝\nIt's a Tie!";       rw.className = 're-winner tie';    }
 
     $('re-scores').innerHTML =
-      `🦊 Sales: <b>${last.orange.toLocaleString()}</b> clicks<br>` +
-      `🐯 Acct: <b>${last.purple.toLocaleString()}</b> clicks`;
+      `<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Sales: <b>` + last.orange.toLocaleString() + `</b> clicks<br><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Acct: <b>` + last.purple.toLocaleString() + `</b> clicks`;
 
     const ow = roundHistory.filter(h => h.winner === 'orange').length;
     const pw = roundHistory.filter(h => h.winner === 'purple').length;
@@ -674,13 +677,12 @@
     const ow = roundHistory.filter(h => h.winner === 'orange').length;
     const pw = roundHistory.filter(h => h.winner === 'purple').length;
     const gw = $('go-winner');
-    if (ow > pw) { gw.textContent = '🦊\nSales\nWins the Series!';       gw.className = 'go-winner orange'; }
-    else if (pw > ow) { gw.textContent = '🐯\nAccounting\nWins the Series!'; gw.className = 'go-winner purple'; }
+    if (ow > pw) { gw.innerHTML = '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:4rem;height:4rem;object-fit:contain;display:block;margin:0 auto 8px"><span>Sales Wins the Series!</span>'; gw.className = 'go-winner orange'; }
+    else if (pw > ow) { gw.innerHTML = '<img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:4rem;height:4rem;object-fit:contain;display:block;margin:0 auto 8px"><span>Accounting Wins the Series!</span>'; gw.className = 'go-winner purple'; }
     else               { gw.textContent = "🤝\nThe Series\nis a Draw!";        gw.className = 'go-winner tie';    }
 
     $('go-sub').innerHTML =
-      `🦊 Sales: ${ow} round wins · ${TOTAL_ROUNDS - ow - pw} draws<br>` +
-      `🐯 Accounting: ${pw} round wins`;
+      `<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Sales: ${ow} round wins · ${TOTAL_ROUNDS - ow - pw} draws<br><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Accounting: ${pw} round wins`;
 
     buildSeriesBoard('series-board-final');
   }
@@ -692,12 +694,13 @@
     roundHistory.forEach(h => {
       const row = document.createElement('div');
       row.className = 'sb-row';
-      const winTxt = h.winner === 'orange' ? '🦊 Sales' : h.winner === 'purple' ? '🐯 Acct' : '🤝 Tie';
+      const winTxt = h.winner === 'orange'
+        ? '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Sales'
+        : h.winner === 'purple'
+        ? '<img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Acct'
+        : '🤝 Tie';
       const winCls = h.winner === 'orange' ? 'orange' : h.winner === 'purple' ? 'purple' : '';
-      row.innerHTML =
-        `<span class="sb-rnd">Round ${h.round}</span>` +
-        `<span class="sb-winner ${winCls}">${winTxt}</span>` +
-        `<span>${h.orange.toLocaleString()} – ${h.purple.toLocaleString()}</span>`;
+      row.innerHTML = `<span class='sb-rnd'>Round ${h.round}</span><span class='sb-winner ${winCls}'>${winTxt}</span><span>${h.orange.toLocaleString()} – ${h.purple.toLocaleString()}</span>`;
       el.appendChild(row);
     });
   }
@@ -766,8 +769,8 @@
     const diff = o - p;
     $('diff-num').textContent = Math.abs(diff).toLocaleString();
     const lt = $('lead-txt');
-    if (diff > 0)      { lt.textContent = '🦊 Sales leads';  lt.style.color = 'var(--orange)'; }
-    else if (diff < 0) { lt.textContent = '🐯 Acct leads';   lt.style.color = 'var(--purple)'; }
+    if (diff > 0)      { lt.innerHTML = '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Sales leads';  lt.style.color = 'var(--orange)'; }
+    else if (diff < 0) { lt.innerHTML = '<img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:1em;height:1em;vertical-align:-0.1em;"> Acct leads';   lt.style.color = 'var(--purple)'; }
     else               { lt.textContent = 'Tied';             lt.style.color = ''; }
   }
 
