@@ -315,7 +315,7 @@
 <body>
 
 <div id="header">
-  <div class="title-eyebrow">🏢 Syntara Office Edition</div>
+  <div class="title-eyebrow"> Syntara Office Edition</div>
   <div class="title-main"><em>Enemies</em> With <strong>Benefits</strong><br>CLICK WAR</div>
   <div class="title-divider"></div>
   <div class="title-sub">Sales <img src="https://i.ibb.co/r27VRnQk/Fox.png" alt="Fox" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"> vs Accounting <img src="https://i.ibb.co/G3TBF8v8/Tiger.png" alt="Tiger" style="width:1em;height:1em;vertical-align:-0.1em;object-fit:contain;"></div>
@@ -468,11 +468,11 @@
 
       <!-- Share Card Section -->
       <button class="toggle-share-btn" id="toggle-share-btn" onclick="toggleShareCard()" style="display:none">
-        🐦 Share on X
+         Share on X
       </button>
       <div id="share-card-wrap">
         <div id="share-card">
-          <div class="sc-header">🏢 Syntara Office Edition · Click War</div>
+          <div class="sc-header"> Syntara Office Edition · Click War</div>
           <div class="sc-title" id="sc-title-txt">Enemies With Benefits</div>
           <div class="sc-tally-row" id="sc-tally-row"></div>
           <div class="sc-divider"></div>
@@ -822,7 +822,7 @@
     buildSeriesBoard('series-board');
 
     const isLast = roundIndex >= TOTAL_ROUNDS - 1;
-    $('next-round-btn').textContent = isLast ? '🏆 Final Results' : '▶ See Next Round';
+    $('next-round-btn').textContent = isLast ? ' Final Results' : '▶ See Next Round';
   }
 
   /* ── Called when user taps "Next Round" / "Final Results" ── */
@@ -1008,7 +1008,7 @@
     const btn  = document.getElementById('toggle-share-btn');
     if (wrap.classList.contains('show')) {
       wrap.classList.remove('show');
-      btn.textContent = '🐦 Share on X';
+      btn.textContent = ' Share on X';
     } else {
       buildShareCard();
       wrap.classList.add('show');
@@ -1077,7 +1077,7 @@
       '',
       ...lines,
       '',
-      `#EnemiesWithBenefits #ClickWar #SyntaraOffice`
+      `#EnemiesWithBenefits #JanJingJing`
     ].join('\n');
 
     const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
